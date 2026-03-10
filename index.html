@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golf Pool 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gd: #1a3a2a; --gm: #2d5a3d; --gl: #4a8c5c;
+  --gold: #c9a84c; --gol: #e8c97a;
+  --cream: #f5f0e8; --sand: #e8d9b8;
+  --red: #c0392b; --blue: #2980b9;
+  --live: #27ae60;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--gd);color:var(--cream);font-family:'Source Sans 3',sans-serif;min-height:100vh}
+
+/* ── Header ── */
+.hdr{background:linear-gradient(135deg,var(--gd),var(--gm),var(--gd));border-bottom:3px solid var(--gold);padding:20px;text-align:center;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(201,168,76,.04) 20px,rgba(201,168,76,.04) 40px)}
+.hdr h1{font-family:'Playfair Display',serif;font-size:clamp(1.3rem,4vw,2.2rem);font-weight:900;color:var(--gold);text-shadow:0 2px 8px rgba(0,0,0,.5)}
+.hdr .sub{font-size:.8rem;color:var(--sand);letter-spacing:3px;text-transform:uppercase;margin-top:3px}
+.course-chip{display:inline-flex;gap:8px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.4);border-radius:20px;padding:5px 14px;font-size:.76rem;color:var(--gol);margin-top:8px;letter-spacing:1px}
+
+/* ── Status bar ── */
+.sbar{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;background:rgba(0,0,0,.3);border-bottom:1px solid rgba(201,168,76,.2);padding:6px 14px;font-size:.76rem;color:var(--sand)}
+.spill{display:inline-flex;align-items:center;gap:5px;padding:2px 9px;border-radius:12px;font-size:.72rem}
+.s-live{background:rgba(39,174,96,.2);border:1px solid rgba(39,174,96,.5);color:#2ecc71}
+.s-cache{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);color:var(--gol)}
+.s-err{background:rgba(192,57,43,.2);border:1px solid rgba(192,57,43,.5);color:#e74c3c}
+.s-manual{background:rgba(41,128,185,.2);border:1px solid rgba(41,128,185,.5);color:#74b9ff}
+.pulse{width:6px;height:6px;border-radius:50%;background:currentColor;animation:pulse 1.4s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.sbar-btn{background:none;border:1px solid rgba(201,168,76,.35);border-radius:5px;color:var(--gol);padding:2px 9px;font-size:.72rem;cursor:pointer;transition:all .2s}
+.sbar-btn:hover{background:rgba(201,168,76,.1)}
+.admin-link-btn{background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);border-radius:5px;color:var(--gol);padding:2px 10px;font-size:.72rem;cursor:pointer;transition:all .2s;margin-left:auto}
+.admin-link-btn:hover{background:rgba(201,168,76,.22)}
+
+/* ── Tabs ── */
+.tabs{display:flex;background:var(--gd);border-bottom:2px solid var(--gold);overflow-x:auto;scrollbar-width:none;padding:0 12px}
+.tb{background:none;border:none;color:var(--sand);padding:13px 18px;font-family:'Source Sans 3',sans-serif;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .2s}
+.tb:hover{color:var(--gol)}
+.tb.active{color:var(--gold);border-bottom-color:var(--gold);font-weight:600}
+
+.main{max-width:1100px;margin:0 auto;padding:20px 14px 60px}
+.tp{display:none}.tp.active{display:block}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--gold);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid rgba(201,168,76,.3)}
+.card{background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:18px;margin-bottom:14px}
+
+/* ── Picks form ── */
+.pf{display:flex;flex-direction:column;gap:10px}
+.nr{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.nr label{color:var(--gol);font-size:.88rem;min-width:110px}
+.nr input{background:rgba(255,255,255,.08);border:1px solid rgba(201,168,76,.4);border-radius:6px;color:var(--cream);padding:8px 13px;font-family:'Source Sans 3',sans-serif;font-size:.93rem;flex:1;min-width:180px}
+.nr input:focus{outline:none;border-color:var(--gold)}
+.tg{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.tc{background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.25);border-radius:8px;overflow:hidden}
+.th{background:linear-gradient(90deg,var(--gm),var(--gd));border-bottom:1px solid rgba(201,168,76,.3);padding:8px 13px;display:flex;justify-content:space-between;align-items:center}
+.tl{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--gold);font-weight:700}
+.td2{font-size:.7rem;color:var(--sand);letter-spacing:1px;text-transform:uppercase}
+.tb2{padding:11px 13px;display:flex;flex-direction:column;gap:7px}
+.pr{display:flex;align-items:center;gap:7px}
+.pl{font-size:.76rem;color:var(--sand);min-width:26px}
+.ps{flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(201,168,76,.32);border-radius:6px;color:var(--cream);padding:6px 9px;font-family:'Source Sans 3',sans-serif;font-size:.86rem;cursor:pointer}
+.ps:focus{outline:none;border-color:var(--gold)}
+.ps option{background:#1a3a2a;color:var(--cream)}
+.br{background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.28);border-radius:8px;padding:13px;display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.bf{display:flex;flex-direction:column;gap:4px}
+.bf label{font-size:.8rem;color:var(--gol)}
+.bf select,.bf input{background:rgba(255,255,255,.07);border:1px solid rgba(201,168,76,.32);border-radius:6px;color:var(--cream);padding:7px 9px;font-family:'Source Sans 3',sans-serif;font-size:.88rem}
+.bf input::placeholder{color:rgba(245,240,232,.35)}
+.bf select:focus,.bf input:focus{outline:none;border-color:var(--gold)}
+.sbtn{background:linear-gradient(135deg,var(--gold),var(--gol));color:var(--gd);border:none;border-radius:8px;padding:13px 30px;font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;cursor:pointer;transition:all .2s;align-self:flex-start}
+.sbtn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(201,168,76,.4)}
+.sbtn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
+/* ── Entries ── */
+.pool-sum{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:9px;margin-bottom:18px}
+.ss{background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.2);border-radius:8px;padding:11px 13px;text-align:center}
+.ss .v{font-family:'Playfair Display',serif;font-size:1.55rem;color:var(--gold);font-weight:700}
+.ss .l{font-size:.7rem;color:var(--sand);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+.el{display:flex;flex-direction:column;gap:13px}
+.ec{background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.2);border-radius:10px;overflow:hidden}
+.ech{background:var(--gm);padding:9px 15px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(201,168,76,.22)}
+.en{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold);font-weight:700}
+.em{font-size:.78rem;color:var(--sand)}
+.epg{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:rgba(201,168,76,.1);font-size:.76rem}
+@media(max-width:650px){.epg{grid-template-columns:repeat(3,1fr)}}
+.etc{background:rgba(255,255,255,.03);padding:7px 9px}
+.etl{color:var(--gol);font-size:.66rem;text-transform:uppercase;letter-spacing:1px}
+.etp{display:flex;flex-direction:column;gap:2px;margin-top:3px;color:var(--cream)}
+.ef{padding:7px 13px;display:flex;gap:14px;align-items:center;border-top:1px solid rgba(201,168,76,.1);font-size:.8rem;flex-wrap:wrap}
+.ef span{color:var(--sand)}.ef strong{color:var(--gol)}
+.delbtn{margin-left:auto;background:none;border:1px solid rgba(192,57,43,.4);border-radius:6px;color:rgba(192,57,43,.8);padding:3px 10px;font-size:.76rem;cursor:pointer;transition:all .2s}
+.delbtn:hover{background:rgba(192,57,43,.15);color:var(--red)}
+.hidden-banner{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);border-radius:8px;padding:20px;text-align:center;color:var(--sand)}
+.hidden-banner .icon{font-size:2.2rem;margin-bottom:8px}
+.hidden-banner strong{color:var(--gol);display:block;font-size:1rem;margin-bottom:4px}
+
+/* ── Leaderboard ── */
+.lb-table{width:100%;border-collapse:collapse;font-size:.86rem}
+.lb-table th{background:var(--gm);color:var(--gold);padding:9px 11px;text-align:left;font-family:'Playfair Display',serif;font-weight:700;border-bottom:2px solid var(--gold);white-space:nowrap}
+.lb-table td{padding:9px 11px;border-bottom:1px solid rgba(201,168,76,.1);color:var(--cream);vertical-align:middle}
+.lb-table tr:hover td{background:rgba(255,255,255,.03)}
+.rc{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;text-align:center}
+.r1{color:#FFD700}.r2{color:#C0C0C0}.r3{color:#CD7F32}
+.btag{background:rgba(201,168,76,.22);color:var(--gol);font-size:.7rem;padding:1px 7px;border-radius:10px;margin-left:5px}
+.wc{color:#4CAF50;font-size:.78rem}
+.pbadge{display:inline-block;padding:2px 9px;border-radius:12px;font-size:.78rem;font-weight:600}
+.p1{background:rgba(255,215,0,.2);color:#FFD700;border:1px solid rgba(255,215,0,.35)}
+.p2{background:rgba(192,192,192,.2);color:#C0C0C0;border:1px solid rgba(192,192,192,.35)}
+.p3{background:rgba(205,127,50,.2);color:#CD7F32;border:1px solid rgba(205,127,50,.35)}
+
+/* ── Scores grid ── */
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:11px}
+.gsc{background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.18);border-radius:8px;overflow:hidden}
+.gsc.has-data{border-color:rgba(39,174,96,.3)}
+.gsn{background:var(--gm);padding:7px 11px;font-size:.86rem;font-weight:600;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(201,168,76,.18)}
+.gtb{font-size:.68rem;background:rgba(201,168,76,.22);color:var(--gol);padding:1px 6px;border-radius:10px}
+.ri{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1px;background:rgba(201,168,76,.08)}
+.ric{background:rgba(255,255,255,.03);display:flex;flex-direction:column;align-items:center;padding:5px 3px}
+.ric label{font-size:.63rem;color:var(--sand);margin-bottom:2px}
+.ric input{width:50px;text-align:center;background:rgba(255,255,255,.07);border:1px solid rgba(201,168,76,.28);border-radius:4px;color:var(--cream);padding:4px;font-size:.88rem}
+.ric input:focus{outline:none;border-color:var(--gold)}
+.ric input.af{background:rgba(39,174,96,.1);border-color:rgba(39,174,96,.4);color:#2ecc71}
+.gt{padding:5px 11px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(201,168,76,.12);font-size:.82rem;color:var(--gol)}
+.mcl{display:flex;align-items:center;gap:4px;font-size:.72rem;color:var(--sand);cursor:pointer}
+
+/* ── Rules ── */
+.rules-sec{max-width:700px;margin:0 auto}
+.rule{background:rgba(255,255,255,.04);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:11px 15px;margin-bottom:9px;font-size:.88rem;line-height:1.6;color:var(--cream)}
+.rule strong{color:var(--gol)}
+
+/* ── Admin login overlay ── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:1000;backdrop-filter:blur(4px)}
+.overlay.hidden{display:none}
+.login-box{background:var(--gm);border:2px solid var(--gold);border-radius:14px;padding:36px 32px;width:340px;max-width:90vw;text-align:center}
+.login-box h2{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.5rem;margin-bottom:6px}
+.login-box p{font-size:.82rem;color:var(--sand);margin-bottom:22px}
+.lf{display:flex;flex-direction:column;gap:11px}
+.lf input{background:rgba(255,255,255,.08);border:1px solid rgba(201,168,76,.4);border-radius:7px;color:var(--cream);padding:10px 13px;font-size:.95rem;font-family:'Source Sans 3',sans-serif}
+.lf input:focus{outline:none;border-color:var(--gold)}
+.lbtn{background:linear-gradient(135deg,var(--gold),var(--gol));color:var(--gd);border:none;border-radius:8px;padding:12px;font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;cursor:pointer;transition:all .2s}
+.lbtn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(201,168,76,.4)}
+.lerr{color:#e74c3c;font-size:.82rem;min-height:18px}
+.cancel-login{background:none;border:none;color:var(--sand);font-size:.82rem;cursor:pointer;margin-top:4px;text-decoration:underline}
+
+/* ── Admin panel ── */
+#admin-panel{display:none}
+#admin-panel.active{display:block}
+.admin-tabs{display:flex;gap:2px;border-bottom:1px solid rgba(201,168,76,.3);margin-bottom:18px;overflow-x:auto}
+.atb{background:none;border:none;color:var(--sand);padding:10px 16px;font-size:.83rem;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:all .2s}
+.atb:hover{color:var(--gol)}
+.atb.active{color:var(--gold);border-bottom-color:var(--gold);font-weight:600}
+.atp{display:none}.atp.active{display:block}
+.ag{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:700px){.ag{grid-template-columns:1fr}}
+.af2{display:flex;flex-direction:column;gap:9px}
+.fg{display:flex;flex-direction:column;gap:3px}
+.fg label{font-size:.8rem;color:var(--gol)}
+.fg input,.fg select{background:rgba(255,255,255,.07);border:1px solid rgba(201,168,76,.32);border-radius:6px;color:var(--cream);padding:7px 9px;font-size:.88rem;font-family:'Source Sans 3',sans-serif}
+.fg input:focus,.fg select:focus{outline:none;border-color:var(--gold)}
+.abtn{background:var(--gm);color:var(--gold);border:1px solid var(--gold);border-radius:6px;padding:9px 16px;cursor:pointer;font-size:.86rem;transition:all .2s;font-family:'Source Sans 3',sans-serif}
+.abtn:hover{background:var(--gl)}
+.abtn.danger{border-color:var(--red);color:var(--red)}
+.abtn.danger:hover{background:rgba(192,57,43,.2)}
+.abtn.success{border-color:#27ae60;color:#27ae60}
+.abtn.success:hover{background:rgba(39,174,96,.2)}
+.note{font-size:.76rem;color:var(--sand);font-style:italic;line-height:1.5}
+.cblock{background:rgba(0,0,0,.5);border:1px solid rgba(201,168,76,.2);border-radius:7px;padding:12px 14px;font-family:monospace;font-size:.78rem;color:#2ecc71;white-space:pre;overflow-x:auto;line-height:1.6}
+.small-grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:7px}
+.res-box{background:rgba(0,0,0,.3);border:1px solid rgba(201,168,76,.2);border-radius:6px;padding:10px 13px;font-size:.82rem;color:var(--sand);min-height:32px;margin-top:4px}
+.tier-preview{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:12px}
+.tp-card{background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.2);border-radius:8px;overflow:hidden}
+.tp-h{background:var(--gm);padding:6px 11px;font-size:.82rem;font-weight:600;color:var(--gold);display:flex;justify-content:space-between}
+.tp-body{padding:8px 11px;max-height:160px;overflow-y:auto;font-size:.78rem;line-height:1.7;color:var(--cream)}
+.admins-table{width:100%;border-collapse:collapse;font-size:.85rem}
+.admins-table th{background:var(--gm);color:var(--gold);padding:8px 11px;text-align:left;border-bottom:1px solid rgba(201,168,76,.3)}
+.admins-table td{padding:8px 11px;border-bottom:1px solid rgba(201,168,76,.08);color:var(--cream)}
+.reveal-countdown{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);border-radius:8px;padding:14px;text-align:center;margin-bottom:14px}
+.reveal-countdown .time{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--gold);letter-spacing:2px}
+.reveal-countdown .lbl{font-size:.76rem;color:var(--sand);margin-top:3px}
+
+/* ── Misc ── */
+.toast{position:fixed;bottom:22px;right:22px;background:var(--gm);border:1px solid var(--gold);border-radius:8px;padding:11px 18px;color:var(--cream);font-size:.88rem;box-shadow:0 8px 28px rgba(0,0,0,.4);transform:translateY(100px);opacity:0;transition:all .3s ease;z-index:9999}
+.toast.show{transform:translateY(0);opacity:1}
+.empty{text-align:center;padding:44px 22px;color:var(--sand);font-style:italic}
+.loading{text-align:center;padding:30px;color:var(--sand)}
+.loading::after{content:'';display:inline-block;width:14px;height:14px;border:2px solid var(--gold);border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;margin-left:7px;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}
+.chip{background:rgba(255,255,255,.06);border:1px solid rgba(201,168,76,.22);border-radius:18px;padding:3px 11px;font-size:.76rem;color:var(--sand)}
+.chip strong{color:var(--gol)}
+.badge-admin{background:rgba(201,168,76,.2);color:var(--gold);border:1px solid rgba(201,168,76,.4);border-radius:12px;padding:2px 9px;font-size:.72rem;margin-left:6px}
+select option{color:#000;background:#fff}
+.file-drop{border:2px dashed rgba(201,168,76,.35);border-radius:8px;padding:28px;text-align:center;cursor:pointer;transition:all .2s;position:relative}
+.file-drop:hover,.file-drop.drag{border-color:var(--gold);background:rgba(201,168,76,.06)}
+.file-drop input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
+.file-drop .icon{font-size:2rem;margin-bottom:6px}
+.file-drop p{font-size:.85rem;color:var(--sand)}
+.file-drop strong{color:var(--gol)}
+</style>
+</head>
+<body>
+
+<!-- Admin Login Overlay -->
+<div class="overlay hidden" id="login-overlay">
+  <div class="login-box">
+    <div style="font-size:1.8rem;margin-bottom:6px">🔐</div>
+    <h2>Admin Login</h2>
+    <p>Golf Pool Commissioner Access</p>
+    <div class="lf">
+      <input type="text" id="l-user" placeholder="Username" autocomplete="username" />
+      <input type="password" id="l-pass" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()" />
+      <div class="lerr" id="lerr"></div>
+      <button class="lbtn" onclick="doLogin()">Sign In</button>
+      <button class="cancel-login" onclick="closeLogin()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="hdr">
+  <div style="font-size:1.9rem;margin-bottom:3px">🏴󠁧󠁢󠁳󠁣󠁴󠁿⛳</div>
+  <h1 id="hdr-title">Golf Pool 2025</h1>
+  <div class="sub" id="hdr-sub">Loading tournament...</div>
+  <div class="course-chip" id="hdr-chip">Par — · — Yards</div>
+</div>
+
+<div class="sbar">
+  <span id="status-pill" class="spill s-cache"><span class="pulse"></span> Connecting...</span>
+  <span id="status-detail">Checking...</span>
+  <button class="sbar-btn" onclick="refreshScores(true)">⟳ Refresh</button>
+  <span id="auto-lbl" style="color:rgba(232,217,184,.4);font-size:.7rem">Auto: off</span>
+  <button class="admin-link-btn" id="admin-toggle-btn" onclick="toggleAdminMode()">⚙ Admin</button>
+</div>
+
+<div class="tabs" id="pub-tabs">
+  <button class="tb active" onclick="switchTab('picks')">📋 Make Picks</button>
+  <button class="tb" onclick="switchTab('entries')">👥 Entries</button>
+  <button class="tb" onclick="switchTab('leaderboard')">🏆 Leaderboard</button>
+  <button class="tb" onclick="switchTab('rules')">📖 Rules</button>
+</div>
+
+<div class="main">
+
+  <!-- PUBLIC TABS -->
+  <div id="pub-content">
+
+    <!-- PICKS -->
+    <div class="tp active" id="tab-picks">
+      <div class="chips">
+        <span class="chip"><strong>$50</strong> buy-in</span>
+        <span class="chip"><strong>6 Tiers</strong> · 2 picks each</span>
+        <span class="chip">Winner bonus <strong>−10 pts</strong></span>
+        <span class="chip">Payout <strong>65/25/10%</strong></span>
+      </div>
+      <div class="pf">
+        <div class="nr">
+          <label>Your Name</label>
+          <input type="text" id="entry-name" placeholder="e.g. Matt Spirek" />
+        </div>
+        <div class="tg" id="tiers-grid"></div>
+        <div class="br">
+          <div class="bf">
+            <label>🏆 Tournament Winner Pick</label>
+            <select id="pick-winner"><option value="">— Select Winner —</option></select>
+          </div>
+          <div class="bf">
+            <label>📊 Winning Score vs. Par (Tiebreaker)</label>
+            <input type="number" id="pick-score" placeholder="-15" />
+          </div>
+        </div>
+        <button class="sbtn" id="submit-btn" onclick="submitEntry()">Submit Entry ⛳</button>
+      </div>
+    </div>
+
+    <!-- ENTRIES -->
+    <div class="tp" id="tab-entries">
+      <div class="pool-sum" id="pool-sum"></div>
+      <div id="entries-area"><div class="loading">Loading</div></div>
+    </div>
+
+    <!-- LEADERBOARD -->
+    <div class="tp" id="tab-leaderboard">
+      <div id="lb-content"><div class="loading">Loading</div></div>
+    </div>
+
+    <!-- RULES -->
+    <div class="tp" id="tab-rules">
+      <div class="rules-sec">
+        <h2 class="sec-title">How It Works</h2>
+        <div class="rule"><strong>Pick 2 golfers from each of the 6 tiers.</strong> Tiers are ranked by odds — Tier 1 is the favorites, Tier 6 is the rest of the field.</div>
+        <div class="rule"><strong>Scoring:</strong> Keep the lowest score between your two golfers per tier. Drop your worst-performing tier entirely. Your final score = sum of best 5 tier scores.</div>
+        <div class="rule"><strong>Missed Cut / WD:</strong> Receives the highest individual round score from the field for Saturday and Sunday.</div>
+        <div class="rule"><strong>Winner Bonus:</strong> Pick the tournament champion correctly = <strong>−10 points</strong>.</div>
+        <div class="rule"><strong>Tiebreaker 1:</strong> Closest predicted winning score vs. par (e.g., −15).</div>
+        <div class="rule"><strong>Tiebreaker 2:</strong> Most players making the cut out of your 12.</div>
+        <div class="rule"><strong>Payout:</strong> 1st = 65% · 2nd = 25% · 3rd = 10%.</div>
+      </div>
+    </div>
+
+  </div><!-- /pub-content -->
+
+  <!-- ADMIN PANEL -->
+  <div id="admin-panel">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap">
+      <h2 class="sec-title" style="margin-bottom:0;border:none">⚙ Admin Panel</h2>
+      <span class="badge-admin" id="admin-badge">—</span>
+      <button class="abtn danger" style="margin-left:auto;padding:6px 14px;font-size:.8rem" onclick="logout()">Sign Out</button>
+    </div>
+
+    <div class="admin-tabs">
+      <button class="atb active" onclick="switchAdmin('at-tournament')">🏌 Tournament</button>
+      <button class="atb" onclick="switchAdmin('at-tiers')">📂 Tiers / CSV</button>
+      <button class="atb" onclick="switchAdmin('at-entries')">👥 Entries</button>
+      <button class="atb" onclick="switchAdmin('at-scores')">⛳ Scores</button>
+      <button class="atb" onclick="switchAdmin('at-visibility')">👁 Visibility</button>
+      <button class="atb" onclick="switchAdmin('at-admins')">🔐 Admins</button>
+      <button class="atb" onclick="switchAdmin('at-setup')">🚀 Setup</button>
+    </div>
+
+    <!-- TOURNAMENT SETTINGS -->
+    <div class="atp active" id="at-tournament">
+      <div class="ag">
+        <div class="card">
+          <h3 style="color:var(--gol);margin-bottom:13px;font-size:.95rem">Tournament Info</h3>
+          <div class="af2">
+            <div class="fg"><label>Tournament Name</label><input id="t-name" type="text" /></div>
+            <div class="fg"><label>Course</label><input id="t-course" type="text" /></div>
+            <div class="fg"><label>Par</label><input id="t-par" type="number" /></div>
+            <div class="fg"><label>Year</label><input id="t-year" type="number" /></div>
+            <div class="fg"><label>Buy-In ($)</label><input id="t-buyin" type="number" /></div>
+            <div class="fg"><label>ESPN Event ID</label><input id="t-espnid" type="text" placeholder="401580350" /></div>
+            <div class="fg"><label>Missed-Cut Penalty Score</label><input id="t-cutval" type="number" /></div>
+            <button class="abtn" onclick="saveTournament()">Save Tournament Settings</button>
+            <div class="res-box" id="t-result"></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--gol);margin-bottom:13px;font-size:.95rem">ESPN Connection</h3>
+          <div class="af2">
+            <button class="abtn" onclick="refreshScores(true)">📡 Force ESPN Refresh</button>
+            <button class="abtn" onclick="testESPN()">🔌 Test ESPN Endpoint</button>
+            <div class="res-box" id="espn-result"></div>
+            <p class="note">ESPN event ID is set above. During tournament week, scores auto-cache for 5 minutes. Use Force Refresh to update immediately.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIERS / CSV -->
+    <div class="atp" id="at-tiers">
+      <div class="card">
+        <h3 style="color:var(--gol);margin-bottom:13px;font-size:.95rem">Upload Player List from Bovada CSV</h3>
+        <p class="note" style="margin-bottom:12px">CSV format: <strong>Player Name, Odds</strong> (one per line). Odds can be American (+1200, -120), decimal (12.0), or fractional (12/1). Admin will preview tiers before confirming.</p>
+        <div class="file-drop" id="csv-drop">
+          <input type="file" accept=".csv,.txt" onchange="handleCSV(this.files[0])" />
+          <div class="icon">📄</div>
+          <p><strong>Click to upload</strong> or drag a CSV here</p>
+          <p style="font-size:.72rem;margin-top:4px">Player Name, Odds</p>
+        </div>
+        <div id="csv-preview" style="margin-top:14px"></div>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--gol);margin-bottom:13px;font-size:.95rem">Current Tiers</h3>
+        <div class="tier-preview" id="current-tiers-preview"></div>
+        <button class="abtn" style="margin-top:12px" onclick="loadCurrentTiers()">↺ Refresh</button>
+      </div>
+    </div>
+
+    <!-- ENTRIES (admin view) -->
+    <div class="atp" id="at-entries">
+      <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;align-items:center">
+        <h3 style="color:var(--gol);font-size:.95rem">All Entries</h3>
+        <button class="abtn" style="margin-left:auto" onclick="loadAdminEntries()">↺ Refresh</button>
+      </div>
+      <div id="admin-entries-list"><div class="loading">Loading</div></div>
+    </div>
+
+    <!-- SCORES (admin) -->
+    <div class="atp" id="at-scores">
+      <div class="ag" style="margin-bottom:14px">
+        <div class="card">
+          <h3 style="color:var(--gol);margin-bottom:13px;font-size:.95rem">Manual Score Entry</h3>
+          <div class="af2">
+            <div class="fg"><label>Player</label><select id="m-player"><option value="">— Select —</option></select></div>
+            <div class="small-grid4">
+              <div class="fg"><label>R1</label><input id="m-r1" type="number" placeholder="—" min="60" max="100" /></div>
+              <div class="fg"><label>R2</label><input id="m-r2" type="number" placeholder="—" min="60" max="100" /></div>
+              <div class="fg"><label>R3</label><input id="m-r3" type="number" placeholder="—" min="60" max="100" /></div>
+              <div class="fg"><label>R4</label><input id="m-r4" type="number" placeholder="—" min="60" max="100" /></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <input type="checkbox" id="m-mc" style="width:15px;height:15px">
+              <label style="font-size:.82rem;color:var(--sand)">Missed Cut / WD</label>
+            </div>
+            <button class="abtn success" onclick="saveManualScore()">Save Score</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--gol);margin-bottom:13px;font-size:.95rem">Auto-Refresh ESPN</h3>
+          <div class="af2">
+            <div class="fg"><label>Interval (minutes)</label><input id="refresh-mins" type="number" value="5" min="1" max="60" /></div>
+            <div style="display:flex;gap:8px">
+              <button class="abtn success" onclick="startAutoRefresh()">▶ Start</button>
+              <button class="abtn danger" onclick="stopAutoRefresh()">■ Stop</button>
+            </div>
+            <div class="res-box" id="ar-status">Auto-refresh is off.</div>
+          </div>
+        </div>
+      </div>
+      <div class="sg" id="admin-scores-grid"><div class="loading">Loading scores</div></div>
+    </div>
+
+    <!-- VISIBILITY -->
+    <div class="atp" id="at-visibility">
+      <div class="ag">
+        <div class="card">
+          <h3 style="color:var(--gol);margin-bottom:13px;font-size:.95rem">Entry Visibility</h3>
+          <div class="af2">
+            <div id="vis-countdown" class="reveal-countdown" style="display:none"></div>
+            <div class="fg">
+              <label>Auto-Reveal Date &amp; Time</label>
+              <input id="reveal-dt" type="datetime-local" />
+            </div>
+            <p class="note">Entries automatically go public at this date/time. Leave blank to control manually.</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="abtn success" onclick="setVisibility(true)">👁 Make Public Now</button>
+              <button class="abtn danger" onclick="setVisibility(false)">🔒 Hide Entries</button>
+              <button class="abtn" onclick="saveRevealTime()">💾 Save Auto-Reveal Time</button>
+            </div>
+            <div class="res-box" id="vis-result"></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--gol);margin-bottom:13px;font-size:.95rem">Current Status</h3>
+          <div id="vis-status-box" style="font-size:.88rem;line-height:1.8;color:var(--sand)">Loading...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADMINS -->
+    <div class="atp" id="at-admins">
+      <div class="ag">
+        <div class="card">
+          <h3 style="color:var(--gol);margin-bottom:13px;font-size:.95rem">Admin Accounts</h3>
+          <div id="admins-list"><div class="loading">Loading</div></div>
+          <button class="abtn" style="margin-top:12px" onclick="loadAdmins()">↺ Refresh</button>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--gol);margin-bottom:13px;font-size:.95rem">Add Admin</h3>
+          <div class="af2">
+            <div class="fg"><label>Username</label><input id="new-user" type="text" placeholder="username" /></div>
+            <div class="fg"><label>Password</label><input id="new-pass" type="password" placeholder="password" /></div>
+            <div class="fg">
+              <label>Role</label>
+              <select id="new-role">
+                <option value="admin">Admin</option>
+                <option value="superadmin">Superadmin</option>
+              </select>
+            </div>
+            <button class="abtn success" onclick="addAdmin()">Add Admin</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--gol);margin-bottom:13px;font-size:.95rem">Change My Password</h3>
+          <div class="af2">
+            <div class="fg"><label>Current Password</label><input id="cp-current" type="password" /></div>
+            <div class="fg"><label>New Password</label><input id="cp-new" type="password" /></div>
+            <button class="abtn" onclick="changePassword()">Update Password</button>
+            <div class="res-box" id="cp-result"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETUP / DEPLOY -->
+    <div class="atp" id="at-setup">
+      <div class="card">
+        <h3 style="color:var(--gol);margin-bottom:13px;font-size:.95rem">🚀 Deployment Guide (Render)</h3>
+        <div class="cblock">1. Push these files to GitHub:
+   server.js  |  package.json  |  public/index.html
+
+2. render.com → New Web Service → connect repo
+   Build:  npm install
+   Start:  node server.js
+
+3. Add environment variables in Render dashboard:
+   JWT_SECRET  =  [any long random string]
+   PORT        =  3001  (Render sets this automatically)
+
+4. Deploy — get URL like https://golf-pool-xxx.onrender.com
+
+5. Default logins (CHANGE IMMEDIATELY after first login):
+   josh    /  admin123       (superadmin)
+   admin2  /  commish2025    (admin)</div>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--gol);margin-bottom:13px;font-size:.95rem">CSV Format Reference</h3>
+        <div class="cblock">Player Name,Odds        ← header (optional)
+Scottie Scheffler,+500
+Rory McIlroy,+700
+Jon Rahm,+900
+Ludvig Aberg,+1200
+Collin Morikawa,1400
+Shane Lowry,2200
+Tommy Fleetwood,2500
+...
+
+Supported odds formats:
+  American:   +1200  or  -120  or  1200
+  Fractional: 12/1
+  Decimal:    13.0</div>
+      </div>
+    </div>
+
+  </div><!-- /admin-panel -->
+
+</div><!-- /main -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════
+// CONFIG & STATE
+// ══════════════════════════════════════════════
+const API = () => (window.location.origin.includes('localhost') ? 'http://localhost:3001' : window.location.origin);
+let authToken = localStorage.getItem('gp_token') || null;
+let authUser = null;
+let tiers = {};
+let allPlayers = [];
+let tournamentData = {};
+let liveScores = {};
+let entries = [];
+let autoRefreshTimer = null;
+let pendingTiers = null; // from CSV preview
+
+// ══════════════════════════════════════════════
+// API HELPERS
+// ══════════════════════════════════════════════
+async function api(path, opts = {}) {
+  const headers = { 'Content-Type': 'application/json' };
+  if (authToken) headers['Authorization'] = `Bearer ${authToken}`;
+  const res = await fetch(API() + path, { ...opts, headers: { ...headers, ...(opts.headers || {}) } });
+  if (res.status === 401) { authToken = null; localStorage.removeItem('gp_token'); showLoginOverlay(); throw new Error('Auth required'); }
+  if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.error || `HTTP ${res.status}`); }
+  return res.json();
+}
+
+async function apiForm(path, formData) {
+  const headers = {};
+  if (authToken) headers['Authorization'] = `Bearer ${authToken}`;
+  const res = await fetch(API() + path, { method: 'POST', headers, body: formData });
+  if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.error || `HTTP ${res.status}`); }
+  return res.json();
+}
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+async function init() {
+  await loadTournament();
+  await loadTiers();
+  await refreshScores(false);
+  await loadEntries();
+  if (authToken) await verifyAuth();
+  startVisCountdown();
+}
+
+async function loadTournament() {
+  try {
+    tournamentData = await api('/api/tournament');
+    document.getElementById('hdr-title').textContent = `${tournamentData.name} ${tournamentData.year || ''}`;
+    document.getElementById('hdr-sub').textContent = tournamentData.course || '';
+    document.getElementById('hdr-chip').textContent = `Par ${tournamentData.par} · $${tournamentData.buyIn} buy-in`;
+  } catch {}
+}
+
+async function loadTiers() {
+  try {
+    tiers = await api('/api/tiers');
+    allPlayers = Object.values(tiers).flatMap(t => t.players || []);
+    buildPicksForm();
+    populateManualPlayerSelect();
+    loadCurrentTiers();
+  } catch {}
+}
+
+async function loadEntries() {
+  try {
+    const data = await api('/api/entries');
+    entries = data.entries || [];
+    renderEntries(data);
+    updatePoolSummary();
+  } catch {}
+}
+
+async function refreshScores(force = false) {
+  try {
+    updateStatus('loading');
+    const data = await api(`/api/scores${force ? '?force=true' : ''}`);
+    liveScores = data.scores || {};
+    updateStatus(data.source, data);
+    buildScoresGrid();
+  } catch (e) {
+    updateStatus('error', { error: e.message });
+  }
+}
+
+// ══════════════════════════════════════════════
+// AUTH
+// ══════════════════════════════════════════════
+function showLoginOverlay() { document.getElementById('login-overlay').classList.remove('hidden'); }
+function closeLogin() { document.getElementById('login-overlay').classList.add('hidden'); }
+
+async function doLogin() {
+  const u = document.getElementById('l-user').value.trim();
+  const p = document.getElementById('l-pass').value;
+  const err = document.getElementById('lerr');
+  err.textContent = '';
+  if (!u || !p) { err.textContent = 'Enter username and password'; return; }
+  try {
+    const data = await api('/api/auth/login', { method: 'POST', body: JSON.stringify({ username: u, password: p }) });
+    authToken = data.token;
+    authUser = { username: data.username, role: data.role };
+    localStorage.setItem('gp_token', authToken);
+    closeLogin();
+    document.getElementById('l-pass').value = '';
+    activateAdmin();
+  } catch (e) {
+    err.textContent = e.message || 'Invalid credentials';
+  }
+}
+
+async function verifyAuth() {
+  try {
+    const data = await api('/api/auth/verify');
+    authUser = { username: data.username, role: data.role };
+    activateAdmin();
+  } catch { authToken = null; localStorage.removeItem('gp_token'); }
+}
+
+function logout() {
+  authToken = null; authUser = null;
+  localStorage.removeItem('gp_token');
+  document.getElementById('admin-panel').classList.remove('active');
+  document.getElementById('admin-panel').style.display = 'none';
+  document.getElementById('pub-content').style.display = '';
+  document.getElementById('pub-tabs').style.display = '';
+  document.getElementById('admin-toggle-btn').textContent = '⚙ Admin';
+  showToast('Signed out');
+}
+
+function toggleAdminMode() {
+  if (authUser) {
+    const visible = document.getElementById('admin-panel').style.display !== 'none';
+    if (visible) {
+      document.getElementById('admin-panel').style.display = 'none';
+      document.getElementById('pub-content').style.display = '';
+      document.getElementById('pub-tabs').style.display = '';
+      document.getElementById('admin-toggle-btn').textContent = '⚙ Admin';
+    } else {
+      document.getElementById('admin-panel').style.display = 'block';
+      document.getElementById('pub-content').style.display = 'none';
+      document.getElementById('pub-tabs').style.display = 'none';
+      document.getElementById('admin-toggle-btn').textContent = '← Public View';
+      loadAdminData();
+    }
+  } else {
+    showLoginOverlay();
+  }
+}
+
+function activateAdmin() {
+  document.getElementById('admin-badge').textContent = `${authUser.username} · ${authUser.role}`;
+  document.getElementById('admin-toggle-btn').textContent = '← Public View';
+  showToast(`✓ Logged in as ${authUser.username}`);
+}
+
+function loadAdminData() {
+  loadTournamentForm();
+  loadAdminEntries();
+  buildScoresGrid();
+  loadAdmins();
+  loadVisibilityStatus();
+  loadCurrentTiers();
+}
+
+// ══════════════════════════════════════════════
+// STATUS BAR
+// ══════════════════════════════════════════════
+function updateStatus(state, data = {}) {
+  const pill = document.getElementById('status-pill');
+  const detail = document.getElementById('status-detail');
+  pill.className = 'spill';
+  if (state === 'loading') {
+    pill.classList.add('s-cache'); pill.innerHTML = '<span class="pulse"></span> Fetching...';
+    detail.textContent = 'Loading...';
+  } else if (state === 'espn') {
+    pill.classList.add('s-live'); pill.innerHTML = '<span class="pulse"></span> ESPN LIVE';
+    detail.textContent = `${data.scores?._name || tournamentData.name || ''} · ${data.tournamentStatus || ''}`;
+  } else if (state === 'cache') {
+    pill.classList.add('s-cache'); pill.innerHTML = '<span class="pulse"></span> Cached';
+    detail.textContent = 'ESPN data · cached';
+  } else if (state === 'manual') {
+    pill.classList.add('s-manual'); pill.innerHTML = '✏ Manual';
+    detail.textContent = 'Using manual scores';
+  } else if (state === 'error') {
+    pill.classList.add('s-err'); pill.innerHTML = '✕ Offline';
+    detail.textContent = data.error || 'Backend unreachable';
+  }
+}
+
+// ══════════════════════════════════════════════
+// PICKS FORM
+// ══════════════════════════════════════════════
+function buildPicksForm() {
+  const grid = document.getElementById('tiers-grid');
+  grid.innerHTML = '';
+  for (let t = 1; t <= 6; t++) {
+    const tier = tiers[t] || tiers[String(t)];
+    if (!tier) continue;
+    const div = document.createElement('div');
+    div.className = 'tc';
+    div.innerHTML = `
+      <div class="th"><span class="tl">${tier.label}</span><span class="td2">${tier.desc}</span></div>
+      <div class="tb2">
+        ${[0,1].map(i=>`
+          <div class="pr"><span class="pl">Pick ${i+1}</span>
+            <select class="ps" id="tier${t}_p${i}">
+              <option value="">— Select —</option>
+              ${(tier.players||[]).map(p=>`<option value="${p}">${p}</option>`).join('')}
+            </select>
+          </div>`).join('')}
+      </div>`;
+    grid.appendChild(div);
+  }
+  const ws = document.getElementById('pick-winner');
+  ws.innerHTML = '<option value="">— Select Winner —</option>' + allPlayers.map(p=>`<option value="${p}">${p}</option>`).join('');
+}
+
+async function submitEntry() {
+  const name = document.getElementById('entry-name').value.trim();
+  if (!name) { showToast('Please enter your name'); return; }
+  const picks = {};
+  for (let t = 1; t <= 6; t++) {
+    const p0 = document.getElementById(`tier${t}_p0`)?.value;
+    const p1 = document.getElementById(`tier${t}_p1`)?.value;
+    if (!p0 || !p1) { showToast(`Make both picks for Tier ${t}`); return; }
+    if (p0 === p1) { showToast(`Duplicate pick in Tier ${t}`); return; }
+    picks[t] = [p0, p1];
+  }
+  const winner = document.getElementById('pick-winner').value;
+  const scoreVsPar = document.getElementById('pick-score').value;
+  if (!winner) { showToast('Please pick a tournament winner'); return; }
+  if (!scoreVsPar) { showToast('Please enter a score vs par tiebreaker'); return; }
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true; btn.textContent = 'Submitting...';
+  try {
+    await api('/api/entries', { method: 'POST', body: JSON.stringify({ name, picks, winner, scoreVsPar: parseInt(scoreVsPar) }) });
+    showToast(`✓ Entry submitted for ${name}!`);
+    document.getElementById('entry-name').value = '';
+    for (let t=1;t<=6;t++){document.getElementById(`tier${t}_p0`).value='';document.getElementById(`tier${t}_p1`).value='';}
+    document.getElementById('pick-winner').value='';
+    document.getElementById('pick-score').value='';
+    await loadEntries();
+    switchTab('entries');
+  } catch(e) { showToast('❌ ' + e.message); }
+  finally { btn.disabled=false; btn.textContent='Submit Entry ⛳'; }
+}
+
+// ══════════════════════════════════════════════
+// ENTRIES (public)
+// ══════════════════════════════════════════════
+function renderEntries(data) {
+  const area = document.getElementById('entries-area');
+  if (!data) { area.innerHTML = '<div class="loading">Loading</div>'; return; }
+
+  if (!data.visible) {
+    const revealAt = tournamentData.entriesRevealAt || data.revealAt;
+    const timeStr = revealAt ? new Date(revealAt).toLocaleString() : 'when the commissioner opens them';
+    area.innerHTML = `
+      <div class="hidden-banner">
+        <div class="icon">🔒</div>
+        <strong>${data.count} ${data.count===1?'entry':'entries'} submitted</strong>
+        Picks are hidden until ${timeStr}. Check back after the deadline!
+      </div>`;
+    return;
+  }
+
+  if (!data.entries.length) { area.innerHTML = '<div class="empty">No entries yet.</div>'; return; }
+
+  area.innerHTML = '<div class="el">' + data.entries.map(entry => {
+    const picksHTML = Object.entries(entry.picks||{}).map(([t,[p0,p1]])=>`
+      <div class="etc"><div class="etl">Tier ${t}</div>
+        <div class="etp"><div>${p0}</div><div>${p1}</div></div>
+      </div>`).join('');
+    return `<div class="ec">
+      <div class="ech"><span class="en">${entry.name}</span><span class="em">${entry.submitted ? new Date(entry.submitted).toLocaleDateString() : ''}</span></div>
+      <div class="epg">${picksHTML}</div>
+      <div class="ef"><span>Winner: <strong>${entry.winner}</strong></span><span>Guess: <strong>${entry.scoreVsPar>0?'+':''}${entry.scoreVsPar}</strong></span></div>
+    </div>`;
+  }).join('') + '</div>';
+}
+
+function updatePoolSummary() {
+  const pot = entries.length * (tournamentData.buyIn || 50);
+  document.getElementById('pool-sum').innerHTML = `
+    <div class="ss"><div class="v">${entries.length}</div><div class="l">Entries</div></div>
+    <div class="ss"><div class="v">$${pot}</div><div class="l">Total Pot</div></div>
+    <div class="ss"><div class="v">$${Math.floor(pot*.65)}</div><div class="l">1st (65%)</div></div>
+    <div class="ss"><div class="v">$${Math.floor(pot*.25)}</div><div class="l">2nd (25%)</div></div>
+    <div class="ss"><div class="v">$${Math.floor(pot*.10)}</div><div class="l">3rd (10%)</div></div>`;
+}
+
+// ══════════════════════════════════════════════
+// LEADERBOARD
+// ══════════════════════════════════════════════
+async function loadLeaderboard() {
+  const el = document.getElementById('lb-content');
+  el.innerHTML = '<div class="loading">Loading</div>';
+  try {
+    const data = await api('/api/leaderboard');
+    if (!data.visible) {
+      el.innerHTML = `<div class="hidden-banner">
+        <div class="icon">🔒</div>
+        <strong>Leaderboard Hidden</strong>
+        Picks will be revealed ${data.entriesRevealAt ? 'on ' + new Date(data.entriesRevealAt).toLocaleString() : 'when the commissioner opens them'}.
+      </div>`; return;
+    }
+    if (!data.results.length) { el.innerHTML = '<div class="empty">No entries yet.</div>'; return; }
+    renderLeaderboardData(data.results, el);
+  } catch(e) { el.innerHTML = `<div class="empty">Could not load — ${e.message}</div>`; }
+}
+
+function renderLeaderboardData(results, el) {
+  el.innerHTML = `<table class="lb-table"><thead><tr>
+    <th style="text-align:center">Rank</th><th>Name</th><th>Score</th>
+    <th>Dropped Tier</th><th>Winner Pick</th><th>Score Guess</th><th>Cut Makers</th><th>Payout</th>
+  </tr></thead><tbody>
+  ${results.map((r,i)=>{
+    const rc=i===0?'r1':i===1?'r2':i===2?'r3':'';
+    const pay=i===0?`<span class="pbadge p1">1st 🥇</span>`:i===1?`<span class="pbadge p2">2nd 🥈</span>`:i===2?`<span class="pbadge p3">3rd 🥉</span>`:'—';
+    const sc=r.total!==null?`<span>${r.total}${r.winnerBonus?'<span class="btag">−10</span>':''}</span>`:`<span style="color:var(--sand);font-style:italic">Pending</span>`;
+    return `<tr>
+      <td><span class="rc ${rc}">${r.total!==null?i+1:'—'}</span></td>
+      <td style="font-weight:600">${r.entry.name}</td><td>${sc}</td>
+      <td style="color:var(--sand);font-size:.8rem">${r.droppedTier?'Tier '+r.droppedTier:'—'}</td>
+      <td style="font-size:.83rem">${r.entry.winner||''}${r.winnerBonus?' <span class="wc">✓</span>':''}</td>
+      <td style="font-size:.83rem">${r.entry.scoreVsPar!==undefined?(r.entry.scoreVsPar>0?'+':'')+r.entry.scoreVsPar:''}</td>
+      <td style="text-align:center">${r.cutMakers}/12</td><td>${pay}</td>
+    </tr>`}).join('')}
+  </tbody></table>`;
+}
+
+// ══════════════════════════════════════════════
+// SCORES GRID (admin)
+// ══════════════════════════════════════════════
+function buildScoresGrid() {
+  const grid = document.getElementById('admin-scores-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  const tierOf = {};
+  for(let t=1;t<=6;t++) (tiers[t]?.players||[]).forEach(p=>tierOf[p]=t);
+
+  allPlayers.forEach(player => {
+    const sc = liveScores[player] || {};
+    const total = [sc.r1,sc.r2,sc.r3,sc.r4].filter(v=>v).reduce((a,b)=>a+b,0);
+    const div = document.createElement('div');
+    div.className = 'gsc' + (total?' has-data':'');
+    div.innerHTML = `
+      <div class="gsn">${player}<span class="gtb">T${tierOf[player]||'?'}</span></div>
+      <div class="ri">
+        ${['R1','R2','R3','R4'].map((r,i)=>`
+          <div class="ric"><label>${r}</label>
+            <input type="number" value="${sc[`r${i+1}`]||''}" placeholder="—" min="60" max="100"
+              class="${sc[`r${i+1}`]?'af':''}"
+              onchange="onScoreEdit('${player.replace(/'/g,"\\'")}',${i+1},this.value)" />
+          </div>`).join('')}
+      </div>
+      <div class="gt">
+        <label class="mcl"><input type="checkbox" ${sc.mc?'checked':''} onchange="onMCEdit('${player.replace(/'/g,"\\'")}',this.checked)"> MC/WD</label>
+        <span>Total: <strong>${total||'—'}</strong></span>
+      </div>`;
+    grid.appendChild(div);
+  });
+}
+
+async function onScoreEdit(player, round, val) {
+  if (!liveScores[player]) liveScores[player] = { r1:null,r2:null,r3:null,r4:null,mc:false };
+  liveScores[player][`r${round}`] = val ? parseInt(val) : null;
+  try { await api('/api/scores/manual', { method:'POST', body:JSON.stringify({ playerName:player, ...liveScores[player] }) }); }
+  catch {}
+}
+
+async function onMCEdit(player, val) {
+  if (!liveScores[player]) liveScores[player] = { r1:null,r2:null,r3:null,r4:null,mc:false };
+  liveScores[player].mc = val;
+  try { await api('/api/scores/manual', { method:'POST', body:JSON.stringify({ playerName:player, ...liveScores[player] }) }); }
+  catch {}
+}
+
+function populateManualPlayerSelect() {
+  const s = document.getElementById('m-player');
+  if (!s) return;
+  s.innerHTML = '<option value="">— Select —</option>' + allPlayers.map(p=>`<option value="${p}">${p}</option>`).join('');
+}
+
+async function saveManualScore() {
+  const player = document.getElementById('m-player').value;
+  if (!player) { showToast('Select a player'); return; }
+  const body = {
+    playerName: player,
+    r1: parseInt(document.getElementById('m-r1').value)||null,
+    r2: parseInt(document.getElementById('m-r2').value)||null,
+    r3: parseInt(document.getElementById('m-r3').value)||null,
+    r4: parseInt(document.getElementById('m-r4').value)||null,
+    mc: document.getElementById('m-mc').checked,
+  };
+  try {
+    await api('/api/scores/manual', { method:'POST', body:JSON.stringify(body) });
+    Object.assign(liveScores[player] = liveScores[player]||{}, body);
+    buildScoresGrid();
+    showToast(`✓ Saved score for ${player}`);
+  } catch(e) { showToast('Error: '+e.message); }
+}
+
+// ══════════════════════════════════════════════
+// AUTO REFRESH
+// ══════════════════════════════════════════════
+function startAutoRefresh() {
+  const mins = parseInt(document.getElementById('refresh-mins').value)||5;
+  stopAutoRefresh();
+  autoRefreshTimer = setInterval(()=>refreshScores(true), mins*60000);
+  document.getElementById('ar-status').textContent = `▶ Refreshing every ${mins} minutes`;
+  document.getElementById('auto-lbl').textContent = `Auto: ${mins}min`;
+  showToast(`▶ Auto-refresh every ${mins}min`);
+}
+function stopAutoRefresh() {
+  if (autoRefreshTimer) { clearInterval(autoRefreshTimer); autoRefreshTimer=null; }
+  document.getElementById('ar-status').textContent = 'Auto-refresh is off.';
+  document.getElementById('auto-lbl').textContent = 'Auto: off';
+}
+
+// ══════════════════════════════════════════════
+// TOURNAMENT FORM
+// ══════════════════════════════════════════════
+function loadTournamentForm() {
+  api('/api/tournament').then(t => {
+    document.getElementById('t-name').value = t.name||'';
+    document.getElementById('t-course').value = t.course||'';
+    document.getElementById('t-par').value = t.par||71;
+    document.getElementById('t-year').value = t.year||2025;
+    document.getElementById('t-buyin').value = t.buyIn||50;
+    document.getElementById('t-cutval').value = t.cutPenaltyScore||80;
+  }).catch(()=>{});
+  // espnId — only admins see this field
+  api('/api/status').then(s => {
+    const f = document.getElementById('t-espnid');
+    if (f) f.value = ''; // loaded separately since not in public endpoint
+  }).catch(()=>{});
+}
+
+async function saveTournament() {
+  const body = {
+    name: document.getElementById('t-name').value,
+    course: document.getElementById('t-course').value,
+    par: parseInt(document.getElementById('t-par').value),
+    year: parseInt(document.getElementById('t-year').value),
+    buyIn: parseInt(document.getElementById('t-buyin').value),
+    cutPenaltyScore: parseInt(document.getElementById('t-cutval').value),
+    espnEventId: document.getElementById('t-espnid').value,
+  };
+  try {
+    await api('/api/tournament', { method:'PUT', body:JSON.stringify(body) });
+    document.getElementById('t-result').textContent = '✓ Saved';
+    document.getElementById('t-result').style.color = '#2ecc71';
+    await loadTournament();
+  } catch(e) {
+    document.getElementById('t-result').textContent = '❌ '+e.message;
+    document.getElementById('t-result').style.color = '#e74c3c';
+  }
+}
+
+async function testESPN() {
+  const el = document.getElementById('espn-result');
+  el.textContent = 'Testing...';
+  try {
+    const data = await api('/api/scores?force=true');
+    const count = Object.keys(data.scores||{}).filter(k=>!k.startsWith('_')).length;
+    el.textContent = `✓ ESPN OK · ${count} players · Status: ${data.tournamentStatus||data.source}`;
+    el.style.color = '#2ecc71';
+  } catch(e) {
+    el.textContent = '❌ '+e.message;
+    el.style.color = '#e74c3c';
+  }
+}
+
+// ══════════════════════════════════════════════
+// CSV / TIERS
+// ══════════════════════════════════════════════
+async function handleCSV(file) {
+  if (!file) return;
+  const fd = new FormData();
+  fd.append('csv', file);
+  try {
+    const data = await apiForm('/api/tiers/upload-csv', fd);
+    pendingTiers = data.preview;
+    renderCSVPreview(data);
+  } catch(e) { showToast('CSV error: '+e.message); }
+}
+
+function renderCSVPreview(data) {
+  const el = document.getElementById('csv-preview');
+  el.innerHTML = `
+    <div style="color:var(--gol);font-size:.88rem;margin-bottom:10px">✓ Parsed ${data.total} players into 6 tiers. Review below, then confirm.</div>
+    <div class="tier-preview">
+      ${Object.entries(data.preview).map(([t,players])=>`
+        <div class="tp-card">
+          <div class="tp-h"><span>Tier ${t}</span><span style="color:var(--sand)">${players.length} players</span></div>
+          <div class="tp-body">${players.join('<br>')}</div>
+        </div>`).join('')}
+    </div>
+    <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+      <button class="abtn success" onclick="confirmTiers(false)">✓ Confirm Tiers (keep entries)</button>
+      <button class="abtn danger" onclick="confirmTiers(true)">⚠ Confirm + Reset All Entries</button>
+    </div>`;
+}
+
+async function confirmTiers(resetEntries) {
+  if (!pendingTiers) { showToast('No tiers to confirm'); return; }
+  if (resetEntries && !confirm('This will delete ALL existing entries and scores. Are you sure?')) return;
+  try {
+    await api('/api/tiers/confirm', { method:'POST', body:JSON.stringify({ tiers: pendingTiers, resetEntries }) });
+    showToast('✓ Tiers saved!');
+    pendingTiers = null;
+    document.getElementById('csv-preview').innerHTML = '';
+    await loadTiers();
+  } catch(e) { showToast('Error: '+e.message); }
+}
+
+function loadCurrentTiers() {
+  api('/api/tiers').then(t => {
+    tiers = t;
+    allPlayers = Object.values(t).flatMap(x => x.players||[]);
+    const el = document.getElementById('current-tiers-preview');
+    if (!el) return;
+    el.innerHTML = Object.entries(t).map(([num,tier])=>`
+      <div class="tp-card">
+        <div class="tp-h"><span>${tier.label||'Tier '+num}</span><span style="color:var(--sand)">${(tier.players||[]).length}</span></div>
+        <div class="tp-body">${(tier.players||[]).join('<br>')}</div>
+      </div>`).join('');
+    buildPicksForm();
+    populateManualPlayerSelect();
+  }).catch(()=>{});
+}
+
+// ══════════════════════════════════════════════
+// VISIBILITY
+// ══════════════════════════════════════════════
+function loadVisibilityStatus() {
+  api('/api/tournament').then(t => {
+    tournamentData = { ...tournamentData, ...t };
+    const box = document.getElementById('vis-status-box');
+    const vis = t.entriesVisible;
+    const revealAt = t.entriesRevealAt;
+    box.innerHTML = `
+      <div>Status: <strong style="color:${vis?'#2ecc71':'#e74c3c'}">${vis?'🟢 PUBLIC':'🔒 HIDDEN'}</strong></div>
+      <div>Auto-reveal: <strong style="color:var(--gol)">${revealAt?new Date(revealAt).toLocaleString():'Not set'}</strong></div>
+      <div>Total entries: <strong>${entries.length}</strong></div>`;
+
+    if (revealAt) {
+      const dt = document.getElementById('reveal-dt');
+      if (dt) dt.value = new Date(revealAt).toISOString().slice(0,16);
+    }
+    startVisCountdown();
+  }).catch(()=>{});
+}
+
+async function setVisibility(visible) {
+  try {
+    await api('/api/tournament', { method:'PUT', body:JSON.stringify({ entriesVisible: visible }) });
+    const el = document.getElementById('vis-result');
+    el.textContent = visible ? '✓ Entries are now PUBLIC' : '✓ Entries are now HIDDEN';
+    el.style.color = visible ? '#2ecc71' : '#e74c3c';
+    tournamentData.entriesVisible = visible;
+    await loadEntries();
+    loadVisibilityStatus();
+  } catch(e) { showToast('Error: '+e.message); }
+}
+
+async function saveRevealTime() {
+  const val = document.getElementById('reveal-dt').value;
+  const iso = val ? new Date(val).toISOString() : null;
+  try {
+    await api('/api/tournament', { method:'PUT', body:JSON.stringify({ entriesRevealAt: iso }) });
+    document.getElementById('vis-result').textContent = iso ? `✓ Auto-reveal set for ${new Date(iso).toLocaleString()}` : '✓ Auto-reveal cleared';
+    document.getElementById('vis-result').style.color = '#2ecc71';
+    tournamentData.entriesRevealAt = iso;
+    startVisCountdown();
+  } catch(e) { showToast('Error: '+e.message); }
+}
+
+let countdownTimer = null;
+function startVisCountdown() {
+  if (countdownTimer) clearInterval(countdownTimer);
+  const updateCountdown = () => {
+    const el = document.getElementById('vis-countdown');
+    if (!el) return;
+    const revealAt = tournamentData.entriesRevealAt;
+    if (!revealAt || tournamentData.entriesVisible) { el.style.display='none'; return; }
+    const diff = new Date(revealAt) - new Date();
+    if (diff <= 0) { el.style.display='none'; return; }
+    el.style.display = 'block';
+    const h=Math.floor(diff/3600000), m=Math.floor((diff%3600000)/60000), s=Math.floor((diff%60000)/1000);
+    el.innerHTML = `<div class="time">${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</div><div class="lbl">until entries are revealed</div>`;
+  };
+  updateCountdown();
+  countdownTimer = setInterval(updateCountdown, 1000);
+}
+
+// ══════════════════════════════════════════════
+// ADMINS
+// ══════════════════════════════════════════════
+async function loadAdmins() {
+  try {
+    const list = await api('/api/admins');
+    document.getElementById('admins-list').innerHTML = `
+      <table class="admins-table">
+        <thead><tr><th>Username</th><th>Role</th><th></th></tr></thead>
+        <tbody>${list.map(a=>`
+          <tr>
+            <td>${a.username}</td>
+            <td><span class="badge-admin">${a.role}</span></td>
+            <td>${a.username!==authUser?.username?`<button class="delbtn" onclick="removeAdmin('${a.username}')">Remove</button>`:''}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>`;
+  } catch(e) { document.getElementById('admins-list').innerHTML = `<div class="note">Only superadmins can manage accounts.</div>`; }
+}
+
+async function addAdmin() {
+  const u=document.getElementById('new-user').value.trim();
+  const p=document.getElementById('new-pass').value;
+  const r=document.getElementById('new-role').value;
+  if(!u||!p){showToast('Fill in username and password');return;}
+  try {
+    await api('/api/admins',{method:'POST',body:JSON.stringify({username:u,password:p,role:r})});
+    showToast(`✓ Admin ${u} added`);
+    document.getElementById('new-user').value='';document.getElementById('new-pass').value='';
+    loadAdmins();
+  } catch(e){showToast('Error: '+e.message);}
+}
+
+async function removeAdmin(username) {
+  if(!confirm(`Remove admin ${username}?`))return;
+  try { await api(`/api/admins/${username}`,{method:'DELETE'}); loadAdmins(); showToast(`Removed ${username}`); }
+  catch(e){showToast('Error: '+e.message);}
+}
+
+async function changePassword() {
+  const cur=document.getElementById('cp-current').value;
+  const nw=document.getElementById('cp-new').value;
+  if(!cur||!nw){showToast('Fill in both fields');return;}
+  try {
+    await api('/api/admins/change-password',{method:'POST',body:JSON.stringify({currentPassword:cur,newPassword:nw})});
+    document.getElementById('cp-result').textContent='✓ Password changed';
+    document.getElementById('cp-result').style.color='#2ecc71';
+    document.getElementById('cp-current').value='';document.getElementById('cp-new').value='';
+  } catch(e){
+    document.getElementById('cp-result').textContent='❌ '+e.message;
+    document.getElementById('cp-result').style.color='#e74c3c';
+  }
+}
+
+// ══════════════════════════════════════════════
+// ADMIN ENTRIES VIEW
+// ══════════════════════════════════════════════
+async function loadAdminEntries() {
+  const el = document.getElementById('admin-entries-list');
+  try {
+    const data = await api('/api/admin/entries');
+    if (!data.entries.length) { el.innerHTML='<div class="empty">No entries yet.</div>'; return; }
+    el.innerHTML = '<div class="el">' + data.entries.map(entry => {
+      const picksHTML = Object.entries(entry.picks||{}).map(([t,[p0,p1]])=>`
+        <div class="etc"><div class="etl">T${t}</div>
+          <div class="etp"><div>${p0}</div><div>${p1}</div></div>
+        </div>`).join('');
+      return `<div class="ec">
+        <div class="ech"><span class="en">${entry.name}</span><span class="em">${new Date(entry.submitted).toLocaleString()}</span></div>
+        <div class="epg">${picksHTML}</div>
+        <div class="ef">
+          <span>Winner: <strong>${entry.winner}</strong></span>
+          <span>Guess: <strong>${entry.scoreVsPar>0?'+':''}${entry.scoreVsPar}</strong></span>
+          <button class="delbtn" onclick="adminDeleteEntry(${entry.id})">✕ Remove</button>
+        </div>
+      </div>`;
+    }).join('') + '</div>';
+  } catch(e) { el.innerHTML=`<div class="empty">${e.message}</div>`; }
+}
+
+async function adminDeleteEntry(id) {
+  if(!confirm('Remove this entry?'))return;
+  try {
+    await api(`/api/entries/${id}`,{method:'DELETE'});
+    showToast('Entry removed');
+    loadAdminEntries();
+    await loadEntries();
+  } catch(e){showToast('Error: '+e.message);}
+}
+
+// ══════════════════════════════════════════════
+// NAV
+// ══════════════════════════════════════════════
+function switchTab(name) {
+  const names=['picks','entries','leaderboard','rules'];
+  document.querySelectorAll('.tb').forEach((b,i)=>b.classList.toggle('active',names[i]===name));
+  document.querySelectorAll('.tp').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  if(name==='leaderboard') loadLeaderboard();
+  if(name==='entries') loadEntries();
+}
+
+function switchAdmin(id) {
+  document.querySelectorAll('.atb').forEach((b,i)=>{
+    const ids=['at-tournament','at-tiers','at-entries','at-scores','at-visibility','at-admins','at-setup'];
+    b.classList.toggle('active',ids[i]===id);
+  });
+  document.querySelectorAll('.atp').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(id==='at-entries') loadAdminEntries();
+  if(id==='at-admins') loadAdmins();
+  if(id==='at-visibility') loadVisibilityStatus();
+  if(id==='at-tiers') loadCurrentTiers();
+  if(id==='at-tournament') loadTournamentForm();
+}
+
+// ══════════════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════════════
+function showToast(msg) {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3200);
+}
+
+// ══════════════════════════════════════════════
+// BOOT
+// ══════════════════════════════════════════════
+init();
+</script>
+</body>
+</html>
